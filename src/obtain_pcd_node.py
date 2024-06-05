@@ -30,7 +30,6 @@ def obtain_pointcloud():
     sub = rospy.Subscriber('/camera/depth/points', PointCloud2, point_cloud_callback,queue_size=1,buff_size=52428800)   
     rospy.sleep(0.5)
     sub.unregister()
-    rospy.spin()
 
 if __name__ == '__main__':
     obtain_pointcloud()
