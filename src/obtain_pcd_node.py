@@ -25,7 +25,7 @@ def point_cloud_callback(msg):
     # Save the numpy array as .pcd file
     save_as_pcd(cloud_points)
 
-def obtain_pcd():
+def obtain_pointcloud():
     rospy.init_node('point_cloud_saver', anonymous=True)
     rospy.loginfo("获取点云")
     sub = rospy.Subscriber('/camera/depth/points', PointCloud2, point_cloud_callback,queue_size=1,buff_size=52428800)   
@@ -34,4 +34,4 @@ def obtain_pcd():
     rospy.spin()
 
 if __name__ == '__main__':
-    obtain_pcd()
+    obtain_pointcloud()
