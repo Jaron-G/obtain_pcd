@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
 <launch>
-  <node name="obtain_pcd_server" pkg="obtain_pcd" type="obtain_pcd_server.py" output="screen">  </node>
+  <node pkg="obtain_pcd" type="obtain_pcd_server.py" name="obtain_pcd_server"  output="screen" args="/catkin_ws/src/grasp_icp">  
+  </node>
 </launch>

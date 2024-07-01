@@ -18,16 +18,20 @@ def convert_pcd_to_ply(ply_file, pcd_file):
     pcl.save(point_cloud,ply_file)
 
 def save_as_pcd(points):
+    '''
+    @points: point cloud data to be saved
+    @save_path: save point cloud to a given path
+    '''
     pcl_cloud = pcl.PointCloud()
     pcl_cloud.from_array(points[:,:3].astype(np.float32))
-    rospack = rospkg.RosPack()
-    package_path = rospack.get_path('grasp_icp')  
+    # rospack = rospkg.RosPack()
+    # package_path = rospack.get_path('grasp_icp')  
     # Replace 'your_package_name' with your actual package name
-    pcd_file_path = package_path + "/pcd/scence_gazebo.pcd"   
+    pcd_file_path = pcd_path + "/pcd/scence_gazebo.pcd"   
     # Replace 'your_file_name' with your desired file name
     pcl.save(pcl_cloud, pcd_file_path)
     # convert_pcd_to_ply
-    ply_file_path = package_path + "/pcd/scence_gazebo.ply"  #填入ply文件的路径
+    ply_file_path = pcd_path + "/pcd/scence_gazebo.ply"  #填入ply文件的路径
     convert_pcd_to_ply(ply_file_path, pcd_file_path)
     rospy.loginfo("Point cloud saved as .ply file: %s", ply_file_path)
 
@@ -39,8 +43,10 @@ def point_cloud_callback(msg):
     # Save the numpy array as .pcd file and convert .pcd to .ply
     save_as_pcd(cloud_points)
 
-def obtain_pointcloud():
+def obtain_pointcloud(save_path):
     rospy.loginfo("获取点云")
+    global pcd_path 
+    pcd_path = save_path
     sub = rospy.Subscriber('/camera/depth/points', PointCloud2, point_cloud_callback,queue_size=1,buff_size=52428800)   
     rospy.sleep(0.5)
     sub.unregister()
